@@ -1,23 +1,62 @@
-// src/cli.ts
-import fs from 'fs/promises';
-import path from 'path';
+import { CliAction } from './types';
+import {
+  addTask,
+  updateTask,
+  deleteTask,
+  markInProgress,
+  markDone,
+  listAllTasks,
+  listDoneTasks,
+  listTodoTasks,
+  listInProgressTasks
+} from './actions/taskActions';
 
 const [, , command, ...args] = process.argv;
 
 async function main() {
-  switch (command) {
-    case 'hello':
-      console.log('Hello from Task-Tracker CLI!');
-      break;
+  try {
+    switch (command) {
+      case CliAction.ADD:
+        await addTask(args);
+        break;
 
-    case 'echo':
-      console.log('Echo:', args.join(' '));
-      break;
+      case CliAction.UPDATE:
+        await updateTask(args);
+        break;
 
-    default:
-      console.error(`Unknown command: ${command}`);
-      console.log('Available commands: hello, echo');
-      process.exit(1);
+      case CliAction.DELETE:
+        await deleteTask(args);
+        break;
+
+      case CliAction.MARK_IN_PROGRESS:
+        await markInProgress(args);
+        break;
+
+      case CliAction.MARK_DONE:
+        await markDone(args);
+        break;
+
+      case CliAction.LIST_ALL:
+        await listAllTasks();
+        break;
+
+      case CliAction.LIST_DONE:
+        await listDoneTasks();
+        break;
+
+      case CliAction.LIST_TODO:
+        await listTodoTasks();
+        break;
+
+      case CliAction.LIST_IN_PROGRESS:
+        await listInProgressTasks();
+        break;
+
+      default:
+        console.log('Unknown command');
+    }
+  } catch (e: unknown) {
+    console.error(`Error app`, e);
   }
 }
 

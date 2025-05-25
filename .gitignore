@@ -8,3 +8,4 @@ build/
 # środowisko
 .env
 coverage/
+src/taskStore.json
