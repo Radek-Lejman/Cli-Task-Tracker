@@ -1,66 +1,25 @@
 import { CliAction } from './types';
-import {
-  addTask,
-  updateTask,
-  deleteTask,
-  markInProgress,
-  markDone,
-  listAllTasks,
-  listDoneTasks,
-  listTodoTasks,
-  listInProgressTasks
-} from './actions/taskActions';
+import { cliActions } from './helpers/cliActionsMap';
+import { printHelp } from './helpers/printHelp';
 
-const [, , command, ...args] = process.argv;
+const [,, rawCommand, ...args] = process.argv;
 
-async function main() {
+
+async function main(): Promise<void> {
+  if (!rawCommand || !(rawCommand in cliActions)) {
+    console.error(`Unknown command: ${rawCommand}`);
+    printHelp();
+    process.exit(1);
+  }
+
+  const action = cliActions[rawCommand as CliAction];
   try {
-    switch (command) {
-      case CliAction.ADD:
-        await addTask(args);
-        break;
-
-      case CliAction.UPDATE:
-        await updateTask(args);
-        break;
-
-      case CliAction.DELETE:
-        await deleteTask(args);
-        break;
-
-      case CliAction.MARK_IN_PROGRESS:
-        await markInProgress(args);
-        break;
-
-      case CliAction.MARK_DONE:
-        await markDone(args);
-        break;
-
-      case CliAction.LIST_ALL:
-        await listAllTasks();
-        break;
-
-      case CliAction.LIST_DONE:
-        await listDoneTasks();
-        break;
-
-      case CliAction.LIST_TODO:
-        await listTodoTasks();
-        break;
-
-      case CliAction.LIST_IN_PROGRESS:
-        await listInProgressTasks();
-        break;
-
-      default:
-        console.log('Unknown command');
-    }
-  } catch (e: unknown) {
-    console.error(`Error app`, e);
+    await action(args);
+    process.exit(0);
+  } catch (error) {
+    console.error(`Error executing "${rawCommand}":`, error);
+    process.exit(1);
   }
 }
 
-main().catch(err => {
-  console.error('Error executing command:', err);
-  process.exit(1);
-});
+main();
