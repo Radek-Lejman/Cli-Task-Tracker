@@ -1,4 +1,13 @@
-export type Status = 'todo' | 'in-progress' | 'done';
+export interface Store {
+  lastId: number;
+  tasks: Task[]
+}
+
+export enum Status {
+  TODO = 'todo',
+  IN_PROGRESS = 'in-progress',
+  DONE = 'done'
+}
 
 export interface Task {
   id: number;
