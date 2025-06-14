@@ -1,6 +1,7 @@
-import { Task, Status, Store } from "../types";
-import { STORE_FILE_PATH } from "./config";
-import { FileStore } from "./fileStore";
+import { STORE_FILE_PATH } from "../config/config";
+import { FileStore } from "../store/fileStore";
+import { Store, Task, Status } from "../types/types";
+
 
 export class TaskService {
   private storeFile = new FileStore(STORE_FILE_PATH);

@@ -1,4 +1,4 @@
-import { CliAction } from "../types";
+import { CliAction } from "../types/types";
 
 export function requireId(action: CliAction, args: string[]): number | null {
   const [raw, ...extras] = args;

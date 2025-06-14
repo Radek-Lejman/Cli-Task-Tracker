@@ -1,7 +1,7 @@
-// src/helpers/cliActionsMap.ts
-import { taskService } from "./tasksService";
-import { CliAction, Status } from "../types";
-import { ensureNoArgs, requireId, requireTitles } from "./validators";
+import { taskService } from "../services/tasksService";
+import { CliAction, Status } from "../types/types";
+import { requireTitles, requireId, ensureNoArgs } from "../validators/validators";
+
 
 export const cliActions: Record<CliAction, (args: string[]) => Promise<void>> = {
   [CliAction.ADD]: async (args) => {

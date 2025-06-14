@@ -1,9 +1,10 @@
-import { CliAction } from './types';
-import { cliActions } from './helpers/cliActionsMap';
-import { printHelp } from './helpers/printHelp';
+import { cliActions } from "../commands/cliActionsMap";
+import { CliAction } from "../types/types";
+import { printHelp } from "../utils/printHelp";
+
+
 
 const [,, rawCommand, ...args] = process.argv;
-
 
 async function main(): Promise<void> {
   if (!rawCommand || !(rawCommand in cliActions)) {

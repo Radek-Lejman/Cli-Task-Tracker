@@ -1,4 +1,4 @@
-import { CliAction } from "../types";
+import { CliAction } from "../types/types";
 
 export const printHelp = (): void => {
   console.log(`

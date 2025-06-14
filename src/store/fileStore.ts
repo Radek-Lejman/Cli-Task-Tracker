@@ -1,5 +1,5 @@
-import { Store } from "../types";
 import fs from 'fs/promises';
+import { Store } from '../types/types';
 const DEFAULT_STORE: Store = { lastId: 0, tasks: [] };
 
 
